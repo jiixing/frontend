@@ -7,7 +7,14 @@ import PropTypes from 'prop-types';
 
 import { pick, get } from 'lodash';
 import { withApollo } from 'react-apollo';
-import { Button, Row, Col, Form, FormGroup } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  ControlLabel,
+  Form,
+  FormGroup,
+  Row,
+} from 'react-bootstrap';
 
 import colors from '../constants/colors';
 import TierComponent from './Tier';
@@ -661,7 +668,6 @@ class OrderForm extends React.Component {
 
   renderPayPalSummary = () => {
     const { intl, collective, LoggedInUser } = this.props;
-
     const { totalAmount, currency, tier, interval } = this.state.paypalOrderRequest;
     const amount = formatCurrency(totalAmount, currency);
     const title = (tier && tier.button) || capitalize(intl.formatMessage(this.messages['order.button']));
@@ -674,30 +680,66 @@ class OrderForm extends React.Component {
     };
 
     return (
-      <div className="submit">
-        <h1>Thank you!</h1>
+      <section className="paymentDetails">
+        <SectionTitle section="orderreview" />
 
-        <p>
-          The payment is authorized! We'll charge your PayPal account and process
-          your donation when you click the button "{title}". You will not be charged
-          if you click Cancel or navegate away from this page.
-        </p>
+        <Row>
+          <Col sm={3}>
+            <div style={{ paddingLeft: 30 }}>
+              Order amount
+              <div style={{ fontSize: 40, fontWeight: 'bold' }}>{amount}</div>
+              Collective receiving
+              <div style={{ fontSize: 40, fontWeight: 'bold' }}>{collective.name}</div>
+            </div>
+          </Col>
 
-        <ActionButton className="blue" onClick={this.submitPayPalOrder} disabled={this.state.loading}>
-          { this.state.loading ? <FormattedMessage id='form.processing' defaultMessage='processing' /> : title }
-        </ActionButton>
+          <Col sm={9}>
+            <Row>
+              <Col sm={12}>
+                <div style={{ paddingBottom: 30 }}>
+                  <p>
+                    Please review your order.  We'll charge your PayPal account and process
+                    your donation when you click the button "{title}".
+                  </p>
 
-        <ActionButton className="default"
-                      onClick={() => window.location.reload()}
-                      disabled={this.state.loading}
-        >
-          { this.state.loading
-            ? <FormattedMessage id='form.processing' defaultMessage='processing' />
-            : intl.formatMessage(this.messages['paymentMethod.paypal.cancel']) }
-        </ActionButton>
+                  <p>
+                    You will not be charged if you click Cancel or navegate away from this page.
+                  </p>
+                </div>
+              </Col>
+            </Row>
 
-        { this.renderDisclaimer(disclaimerValues) }
-      </div>
+            <Row>
+              <Col>
+                <ActionButton
+                  className="blue"
+                  bsStyle="primary"
+                  bsSize="small"
+                  style={{ marginLeft: 20 }}
+                  onClick={this.submitPayPalOrder}
+                  disabled={this.state.loading}
+                >
+                  { this.state.loading ? <FormattedMessage id='form.processing' defaultMessage='processing' /> : title }
+                </ActionButton>
+
+                <ActionButton
+                  className="gray"
+                  bsStyle="default"
+                  bsSize="small"
+                  style={{ marginLeft: 20 }}
+                  onClick={() => window.location.reload()}
+                  disabled={this.state.loading}
+                >
+                  { this.state.loading
+                    ? <FormattedMessage id='form.processing' defaultMessage='processing' />
+                    : intl.formatMessage(this.messages['paymentMethod.paypal.cancel']) }
+                </ActionButton>
+              </Col>
+            </Row>
+
+          </Col>
+        </Row>
+      </section>
     );
   }
 

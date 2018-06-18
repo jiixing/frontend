@@ -37,7 +37,8 @@ class SectionTitle extends React.Component {
       'userDetails.title': { id: 'tier.order.userDetails', defaultMessage: 'Personal details' },
       'organizationDetails.title': { id: 'tier.order.organizationDetails', defaultMessage: 'Organization details' },
       'organizationDetails.subtitle': { id: 'tier.order.organizationDetails.description', defaultMessage: 'Create an organization. You can edit it later to add other members.' },
-      'paymentDetails.title': { id: 'tier.order.paymentDetails', defaultMessage: 'Payment details' }
+      'paymentDetails.title': { id: 'tier.order.paymentDetails', defaultMessage: 'Payment details' },
+      'orderreview.title': { id: 'orderreview.title', defaultMessage: 'Order Review' },
     });
   }
 
