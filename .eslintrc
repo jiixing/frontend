@@ -3,8 +3,15 @@
   "env": {
     "jest": true
   },
+  "plugins": [
+    "graphql"
+  ],
   "rules": {
     // we still use console even on frontend
-    "no-console": 0
+    "no-console": 0,
+    "graphql/template-strings": ["error", {"env": "apollo"}],
+    "graphql/named-operations": ["error"],
+    "graphql/capitalized-type-name": ["error"],
+    "graphql/no-deprecated-fields": ["error"],
   }
 }
